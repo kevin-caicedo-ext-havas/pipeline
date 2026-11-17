@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Requerimiento - Pipeline Nuevos Negocios</title>
+<style>
+  :root{--navy:#0f1b2d;--blue:#2e7dd1;--line:#dfe6f0;--ink:#1f2a3d;--muted:#64748b;}
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Arial,sans-serif;}
+  body{background:#eef2f7;color:var(--ink);line-height:1.55;}
+  .topbar{position:sticky;top:0;z-index:50;background:var(--navy);color:#fff;padding:12px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+  .topbar h1{font-size:16px;font-weight:700;}
+  .topbar .actions button{margin-left:8px;padding:8px 14px;border:none;border-radius:6px;cursor:pointer;font-weight:600;font-size:13px;}
+  .btn-doc{background:#2e7dd1;color:#fff;} .btn-pdf{background:#1f9d55;color:#fff;} .btn-edit{background:#c98a1a;color:#fff;}
+  .page{max-width:900px;margin:24px auto;background:#fff;padding:48px 56px;border-radius:8px;box-shadow:0 4px 24px rgba(0,0,0,.08);}
+  .cover{text-align:center;border-bottom:4px solid var(--navy);padding-bottom:28px;margin-bottom:30px;}
+  .cover .tag{color:var(--blue);font-weight:700;letter-spacing:2px;font-size:12px;text-transform:uppercase;}
+  .cover h2{font-size:30px;margin:10px 0;color:var(--navy);}
+  .cover .meta{color:var(--muted);font-size:13px;margin-top:8px;}
+  h3{color:var(--navy);font-size:19px;margin:30px 0 10px;border-left:5px solid var(--blue);padding-left:12px;}
+  h4{color:var(--ink);font-size:15px;margin:16px 0 6px;}
+  p{margin:8px 0;font-size:14px;} ul,ol{margin:8px 0 8px 24px;font-size:14px;} li{margin:4px 0;}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px;}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;}
+  th{background:var(--navy);color:#fff;font-weight:600;font-size:12px;}
+  tr:nth-child(even) td{background:#f6f9fc;}
+  .box{background:#f0f6ff;border:1px solid #cfe0f5;border-radius:8px;padding:14px 18px;margin:14px 0;font-size:13px;}
+  .pill{display:inline-block;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:700;color:#fff;margin:2px;}
+  .CHEMISTRY{background:#5b3fb0;}.PITCH{background:#2e7dd1;}.PROSPECTING{background:#c98a1a;}.WON{background:#1f9d55;}.NOWON{background:#9b2d2d;}
+  [contenteditable="true"]{outline:2px dashed #c98a1a;outline-offset:3px;background:#fffdf5;}
+  footer{text-align:center;color:var(--muted);font-size:12px;margin:30px 0;}
+  /* MOCKUPS */
+  .mock-section{max-width:1100px;margin:0 auto 40px;}
+  .mock-title{color:var(--navy);text-align:center;font-size:22px;margin:30px 0 6px;}
+  .mock-sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:20px;}
+  .screen{background:#0f1b2d;border-radius:12px;overflow:hidden;margin:0 auto 28px;box-shadow:0 8px 30px rgba(0,0,0,.25);color:#e8edf4;}
+  .screen .winbar{background:#16263d;padding:10px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #24375a;}
+  .dot{width:11px;height:11px;border-radius:50%;}
+  .screen .wtitle{margin-left:12px;font-size:13px;color:#cfe0f5;font-weight:600;}
+  .screen .body{padding:18px 20px;}
+  .m-caption{text-align:center;color:var(--muted);font-size:12px;margin:-18px 0 24px;font-style:italic;}
+  .mnav{display:flex;gap:18px;font-size:12px;color:#8aa0bd;margin-bottom:14px;border-bottom:1px solid #24375a;padding-bottom:10px;}
+  .mnav .on{color:#fff;font-weight:700;border-bottom:2px solid #2e7dd1;padding-bottom:11px;}
+  .mkpi{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;}
+  .mkpi .k{flex:1;min-width:120px;background:#16263d;border-radius:8px;padding:12px;text-align:center;}
+  .mkpi .k .v{font-size:20px;font-weight:800;} .mkpi .k .l{font-size:10px;color:#8aa0bd;margin-top:3px;}
+  .mtable{width:100%;border-collapse:collapse;font-size:11px;}
+  .mtable th,.mtable td{padding:6px 8px;border-bottom:1px solid #24375a;text-align:left;}
+  .mtable th{color:#8aa0bd;font-size:9px;text-transform:uppercase;}
+  .mbadge{padding:2px 7px;border-radius:10px;font-size:9px;font-weight:700;color:#fff;}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .fg label{font-size:10px;color:#8aa0bd;text-transform:uppercase;display:block;margin-bottom:4px;}
+  .fg .inp{background:#0f1b2d;border:1px solid #30486b;border-radius:6px;padding:8px;font-size:12px;color:#e8edf4;}
+  .mbtn{background:#2e7dd1;color:#fff;border:none;border-radius:6px;padding:9px 18px;font-size:12px;font-weight:600;cursor:pointer;}
+  .funnel .st{margin:5px auto;color:#fff;text-align:center;padding:9px;border-radius:6px;font-weight:700;font-size:12px;}
+  .bar-wrap{margin:7px 0;} .bar-l{display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px;color:#cfe0f5;}
+  .bar{height:15px;border-radius:4px;}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .panel{background:#16263d;border-radius:8px;padding:14px;}
+  .panel h5{font-size:12px;color:#cfe0f5;margin-bottom:12px;}
+  @media print{.topbar,.mock-section{display:none;} body{background:#fff;} .page{box-shadow:none;margin:0;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>📋 Requerimiento — Sistema de Pipeline de Nuevos Negocios</h1>
+  <div class="actions">
+    <button class="btn-edit" onclick="toggleEdit()">✏️ Editar</button>
+    <button class="btn-doc" onclick="downloadDoc()">⬇ Word (.doc)</button>
+    <button class="btn-pdf" onclick="window.print()">🖨 PDF / Imprimir</button>
+  </div>
+</div>
+
+<!-- ============ DOCUMENTO ============ -->
+<div class="page" id="docContent">
+  <div class="cover">
+    <div class="tag">Havas Media Group · Colombia</div>
+    <h2 contenteditable="false">Sistema de Gestión de Pipeline de Nuevos Negocios</h2>
+    <div class="meta">Documento de Requerimientos Funcionales y Técnicos<br>Versión 1.0 · <span id="fecha"></span></div>
+  </div>
+
+  <h3>1. Contexto y Justificación</h3>
+  <p contenteditable="false">Actualmente el registro del pipeline de nuevos negocios se realiza de forma <b>manual en Excel</b>, lo que implica riesgos operativos: errores de digitación, versiones duplicadas, pérdida de trazabilidad, dificultad para consolidar información y limitaciones para generar reportes dinámicos.</p>
+  <div class="box">
+    <b>Oportunidad:</b> Centralizar la captura y automatizar los cálculos, reportes y visualizaciones (agrupado por estados y Funnel Pipeline), con integración directa a herramientas de Business Intelligence.
+  </div>
+
+  <h3>2. Objetivos</h3>
+  <ul contenteditable="false">
+    <li><b>General:</b> Implementar un sistema ligero para ingresar, almacenar, actualizar y reportar el pipeline de nuevos negocios.</li>
+    <li>Eliminar la dependencia del Excel manual y reducir errores.</li>
+    <li>Automatizar cálculos ponderados por probabilidad y por tasa anual predeterminada.</li>
+    <li>Publicar reportes en BI: vista agrupada por estados y vista Funnel Pipeline Process.</li>
+    <li>Garantizar trazabilidad, control de acceso y auditoría.</li>
+  </ul>
+
+  <h3>3. Alcance</h3>
+  <table>
+    <tr><th style="width:50%">Incluye</th><th>No incluye (fase 1)</th></tr>
+    <tr><td>Captura y gestión (CRUD) de negocios</td><td>Integración con CRM corporativo</td></tr>
+    <tr><td>Catálogos de tipo de negocio y status</td><td>Facturación / cierre contable</td></tr>
+    <tr><td>Tabla de tasas por año</td><td>Firma electrónica de contratos</td></tr>
+    <tr><td>Reportes BI (status + funnel)</td><td>App móvil nativa</td></tr>
+  </table>
+
+  <h3>4. Requerimientos Funcionales</h3>
+  <h4>4.1 Captura de datos (campos)</h4>
+  <table>
+    <tr><th>Campo</th><th>Tipo</th><th>Reglas / Valores</th></tr>
+    <tr><td>Cliente</td><td>Texto</td><td>Obligatorio</td></tr>
+    <tr><td>Industria / Producto</td><td>Lista</td><td>Catálogo editable</td></tr>
+    <tr><td>Tipo de negocio</td><td>Lista</td><td>Media · New Core CSA · Crea · New Core Play</td></tr>
+    <tr><td>Status</td><td>Lista</td><td>CHEMISTRY · NO WON · PITCH · PROSPECTING · WON</td></tr>
+    <tr><td>Impacto 2027 Billings (if won)</td><td>Decimal</td><td>M€</td></tr>
+    <tr><td>Impacto 12 meses Billings (if won)</td><td>Decimal</td><td>M€</td></tr>
+    <tr><td>Impacto 2027 Gross Income (if won)</td><td>Decimal</td><td>M€</td></tr>
+    <tr><td>Impacto 12 meses Gross Income (if won)</td><td>Decimal</td><td>M€</td></tr>
+    <tr><td>Probabilidad de ganar (%)</td><td>Entero</td><td>0 – 100</td></tr>
+    <tr><td>Período estimado de ganar (Acknowledgment)</td><td>Fecha</td><td></td></tr>
+    <tr><td>Período estimado inicio de negocio</td><td>Fecha</td><td></td></tr>
+  </table>
+
+  <h4>4.2 Cálculos automáticos</h4>
+  <ul contenteditable="false">
+    <li><b>Billings ponderado</b> = Impacto 2027 Billings × Probabilidad% × Tasa del año</li>
+    <li><b>Gross Income ponderado</b> = Impacto 2027 GI × Probabilidad% × Tasa del año</li>
+    <li>Totales consolidados por país, tipo de negocio y status.</li>
+  </ul>
+
+  <h4>4.3 Tasa predeterminada por año</h4>
+  <div class="box" contenteditable="false">Tabla de configuración independiente <code>Tasas</code> con los campos <b>Año</b>, <b>Tasa</b> y <b>Vigencia</b>. El sistema aplica automáticamente la tasa correspondiente al año de cada negocio. Las tasas se <b>historizan</b> (no se sobrescriben) para fines de auditoría.</div>
+
+  <h4>4.4 Estados del negocio</h4>
+  <p>
+    <span class="pill PROSPECTING">PROSPECTING</span>
+    <span class="pill CHEMISTRY">CHEMISTRY</span>
+    <span class="pill PITCH">PITCH</span>
+    <span class="pill WON">WON</span>
+    <span class="pill NOWON">NO WON</span>
+  </p>
+
+  <h4>4.5 Reportes y BI</h4>
+  <ol contenteditable="false">
+    <li>Reporte <b>agrupado por Status</b> (tabla + barras, montos ponderados).</li>
+    <li><b>Funnel Pipeline Process</b>: PROSPECTING → CHEMISTRY → PITCH → WON (NO WON como salida).</li>
+    <li>Filtros por tipo de negocio, industria, año y probabilidad.</li>
+    <li>Exportación a Excel / PDF y publicación en Power BI / Looker Studio.</li>
+  </ol>
+
+  <h3>5. Requerimientos No Funcionales</h3>
+  <table>
+    <tr><th>Categoría</th><th>Requerimiento</th></tr>
+    <tr><td>Usabilidad</td><td>Interfaz ligera, intuitiva, bajo mantenimiento</td></tr>
+    <tr><td>Seguridad</td><td>Roles: Lectura / Edición / Admin de tasas</td></tr>
+    <tr><td>Trazabilidad</td><td>Historial de cambios de status y campos clave</td></tr>
+    <tr><td>Disponibilidad</td><td>Acceso web multiusuario</td></tr>
+    <tr><td>Rendimiento</td><td>Carga de reportes < 3 segundos</td></tr>
+  </table>
+
+  <h3>6. Arquitectura Propuesta (opciones)</h3>
+  <table>
+    <tr><th>Opción</th><th>Captura</th><th>Almacenamiento</th><th>BI</th></tr>
+    <tr><td><b>A — Microsoft (recomendada)</b></td><td>Power Apps / SharePoint List</td><td>Dataverse</td><td>Power BI</td></tr>
+    <tr><td>B — Google</td><td>AppSheet / Forms</td><td>Google Sheets</td><td>Looker Studio</td></tr>
+    <tr><td>C — Web ligera</td><td>App HTML/JS</td><td>SQLite / PostgreSQL</td><td>Metabase / Power BI</td></tr>
+  </table>
+
+  <h3>7. Modelo de Datos</h3>
+  <table>
+    <tr><th>Tabla</th><th>Campos principales</th></tr>
+    <tr><td><b>Negocios</b></td><td>id, cliente, industria, tipo_negocio(FK), status(FK), impacto_2027_bill, impacto_12m_bill, impacto_2027_gi, impacto_12m_gi, probabilidad, fecha_ack, fecha_inicio, año(FK)</td></tr>
+    <tr><td><b>Tasas</b></td><td>año, tasa, vigencia</td></tr>
+    <tr><td><b>Catálogos</b></td><td>tipos_negocio, status, industrias</td></tr>
+  </table>
+
+  <h3>8. Roles de Usuario</h3>
+  <table>
+    <tr><th>Rol</th><th>Permisos</th></tr>
+    <tr><td>Comercial / New Business</td><td>Crear y actualizar negocios propios</td></tr>
+    <tr><td>Gerente / Dirección</td><td>Ver todo, aprobar cambios de status, reportes</td></tr>
+    <tr><td>Admin / Finanzas</td><td>Gestionar tasas, catálogos y permisos</td></tr>
+  </table>
+
+  <h3>9. Criterios de Aceptación</h3>
+  <ul contenteditable="false">
+    <li>Un usuario puede registrar un negocio completo en menos de 2 minutos.</li>
+    <li>Los cálculos ponderados coinciden con la fórmula definida (± 0,01).</li>
+    <li>El reporte Funnel y el agrupado por status se actualizan en tiempo real.</li>
+    <li>La tasa anual se aplica correctamente según el año del negocio.</li>
+  </ul>
+
+  <h3>10. Entregables y Fases</h3>
+  <table>
+    <tr><th>Fase</th><th>Entregable</th><th>Tiempo estimado</th></tr>
+    <tr><td>1</td><td>Modelo de datos + catálogos + captura CRUD</td><td>2 semanas</td></tr>
+    <tr><td>2</td><td>Cálculos automáticos + tabla de tasas</td><td>1 semana</td></tr>
+    <tr><td>3</td><td>Reportes BI (status + funnel)</td><td>2 semanas</td></tr>
+    <tr><td>4</td><td>Pruebas, roles y despliegue</td><td>1 semana</td></tr>
+  </table>
+
+  <footer>Documento editable — Havas Media Group Colombia · Elaborado con asistencia de AVA</footer>
+</div>
+
+<!-- ============ MOCKUPS ============ -->
+<div class="mock-section">
+  <div class="mock-title">🖥️ Mockups de Pantallas del Sistema</div>
+  <div class="mock-sub">Propuesta visual de la interfaz · estilo referencial</div>
+
+  <!-- PANTALLA 1: Dashboard -->
+  <div class="screen">
+    <div class="winbar"><span class="dot" style="background:#ff5f56"></span><span class="dot" style="background:#ffbd2e"></span><span class="dot" style="background:#27c93f"></span><span class="wtitle">Pipeline · Dashboard</span></div>
+    <div class="body">
+      <div class="mnav"><span class="on">Dashboard</span><span>Registrar negocio</span><span>Reportes BI</span><span>Configuración · Tasas</span></div>
+      <div class="mkpi">
+        <div class="k"><div class="v">31,13</div><div class="l">Billings total (if won)</div></div>
+        <div class="k"><div class="v">9,57</div><div class="l">Billings ponderado</div></div>
+        <div class="k"><div class="v">2,67</div><div class="l">Gross Income total</div></div>
+        <div class="k"><div class="v">0,85</div><div class="l">GI ponderado</div></div>
+        <div class="k"><div class="v">14</div><div class="l">Negocios activos</div></div>
+      </div>
+      <table class="mtable">
+        <tr><th>Cliente</th><th>Industria</th><th>Tipo</th><th>Status</th><th>Bill 2027</th><th>Prob%</th><th>Bill×Prob</th></tr>
+        <tr><td>AVAL</td><td>Banking & Financial</td><td>Media</td><td><span class="mbadge CHEMISTRY">CHEMISTRY</span></td><td>6,15</td><td>30%</td><td>1,84</td></tr>
+        <tr><td>CENCOSUD</td><td>Retail</td><td>New Core CSA</td><td><span class="mbadge PITCH">PITCH</span></td><td>6,83</td><td>35%</td><td>2,39</td></tr>
+        <tr><td>OXXO</td><td>Retail</td><td>Media</td><td><span class="mbadge WON">WON</span></td><td>0,77</td><td>100%</td><td>0,77</td></tr>
+        <tr><td>GRUPO FAMILIA</td><td>Consumer Goods</td><td>Crea</td><td><span class="mbadge PROSPECTING">PROSPECTING</span></td><td>2,56</td><td>10%</td><td>0,26</td></tr>
+        <tr><td>HARINERA</td><td>Food & Beverage</td><td>New Core Play</td><td><span class="mbadge NOWON">NO WON</span></td><td>0,78</td><td>0%</td><td>—</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="m-caption">Pantalla 1 — Dashboard principal con KPIs y listado de negocios</div>
+
+  <!-- PANTALLA 2: Formulario -->
+  <div class="screen">
+    <div class="winbar"><span class="dot" style="background:#ff5f56"></span><span class="dot" style="background:#ffbd2e"></span><span class="dot" style="background:#27c93f"></span><span class="wtitle">Pipeline · Registrar / Editar negocio</span></div>
+    <div class="body">
+      <div class="mnav"><span>Dashboard</span><span class="on">Registrar negocio</span><span>Reportes BI</span><span>Configuración · Tasas</span></div>
+      <div class="form-grid">
+        <div class="fg"><label>Cliente</label><div class="inp">AVAL</div></div>
+        <div class="fg"><label>Industria / Producto</label><div class="inp">Banking & Financial Services</div></div>
+        <div class="fg"><label>Tipo de negocio ▾</label><div class="inp">Media</div></div>
+        <div class="fg"><label>Status ▾</label><div class="inp"><span class="mbadge CHEMISTRY">CHEMISTRY</span></div></div>
+        <div class="fg"><label>Impacto 2027 Billings</label><div class="inp">6,15</div></div>
+        <div class="fg"><label>Impacto 12m Billings</label><div class="inp">6,15</div></div>
+        <div class="fg"><label>Impacto 2027 Gross Income</label><div class="inp">0,49</div></div>
+        <div class="fg"><label>Impacto 12m Gross Income</label><div class="inp">0,49</div></div>
+        <div class="fg"><label>Probabilidad de ganar (%)</label><div class="inp">30</div></div>
+        <div class="fg"><label>Año (aplica tasa) ▾</label><div class="inp">2027 → tasa 1,00</div></div>
+        <div class="fg"><label>Período estimado de ganar</label><div class="inp">01-Dic-2026</div></div>
+        <div class="fg"><label>Inicio de negocio</label><div class="inp">01-Ene-2027</div></div>
+      </div>
+      <div style="margin-top:16px;display:flex;gap:10px;"><button class="mbtn">💾 Guardar</button><button class="mbtn" style="background:#30486b">Cancelar</button></div>
+    </div>
+  </div>
+  <div class="m-caption">Pantalla 2 — Formulario de captura con aplicación automática de tasa</div>
+
+  <!-- PANTALLA 3: Reportes BI -->
+  <div class="screen">
+    <div class="winbar"><span class="dot" style="background:#ff5f56"></span><span class="dot" style="background:#ffbd2e"></span><span class="dot" style="background:#27c93f"></span><span class="wtitle">Pipeline · Reportes BI</span></div>
+    <div class="body">
+      <div class="mnav"><span>Dashboard</span><span>Registrar negocio</span><span class="on">Reportes BI</span><span>Configuración · Tasas</span></div>
+      <div class="two">
+        <div class="panel">
+          <h5>📊 Billings ponderado por Status</h5>
+          <div class="bar-wrap"><div class="bar-l"><span>PROSPECTING</span><span>0,36</span></div><div class="bar" style="width:15%;background:#c98a1a"></div></div>
+          <div class="bar-wrap"><div class="bar-l"><span>CHEMISTRY</span><span>2,87</span></div><div class="bar" style="width:60%;background:#5b3fb0"></div></div>
+          <div class="bar-wrap"><div class="bar-l"><span>PITCH</span><span>3,62</span></div><div class="bar" style="width:76%;background:#2e7dd1"></div></div>
+          <div class="bar-wrap"><div class="bar-l"><span>WON</span><span>2,40</span></div><div class="bar" style="width:50%;background:#1f9d55"></div></div>
+          <div class="bar-wrap"><div class="bar-l"><span>NO WON</span><span>0,00</span></div><div class="bar" style="width:3%;background:#9b2d2d"></div></div>
+        </div>
+        <div class="panel">
+          <h5>🔻 Funnel Pipeline Process</h5>
+          <div class="funnel">
+            <div class="st" style="width:100%;background:#c98a1a">PROSPECTING — 2 negocios</div>
+            <div class="st" style="width:82%;background:#5b3fb0">CHEMISTRY — 4 negocios</div>
+            <div class="st" style="width:64%;background:#2e7dd1">PITCH — 5 negocios</div>
+            <div class="st" style="width:46%;background:#1f9d55">WON — 3 negocios</div>
+            <div class="st" style="width:30%;background:#9b2d2d;margin-top:12px">NO WON — 2 (pérdidas)</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:16px;display:flex;gap:10px;"><button class="mbtn">⬇ Exportar Excel</button><button class="mbtn" style="background:#1f9d55">📤 Publicar en Power BI</button></div>
+    </div>
+  </div>
+  <div class="m-caption">Pantalla 3 — Reportes BI: agrupado por status + Funnel Pipeline</div>
+
+  <!-- PANTALLA 4: Configuración tasas -->
+  <div class="screen">
+    <div class="winbar"><span class="dot" style="background:#ff5f56"></span><span class="dot" style="background:#ffbd2e"></span><span class="dot" style="background:#27c93f"></span><span class="wtitle">Pipeline · Configuración de Tasas</span></div>
+    <div class="body">
+      <div class="mnav"><span>Dashboard</span><span>Registrar negocio</span><span>Reportes BI</span><span class="on">Configuración · Tasas</span></div>
+      <table class="mtable">
+        <tr><th>Año</th><th>Tasa</th><th>Vigencia</th><th>Estado</th></tr>
+        <tr><td>2026</td><td>0,95</td><td>01-Ene-2026 → 31-Dic-2026</td><td><span class="mbadge" style="background:#64748b">Histórico</span></td></tr>
+        <tr><td>2027</td><td>1,00</td><td>01-Ene-2027 → 31-Dic-2027</td><td><span class="mbadge WON">Vigente</span></td></tr>
+        <tr><td>2028</td><td>1,04</td><td>01-Ene-2028 →</td><td><span class="mbadge PITCH">Planificado</span></td></tr>
+      </table>
+      <div style="margin-top:16px;display:flex;gap:10px;"><button class="mbtn">+ Nueva tasa</button></div>
+      <p style="font-size:11px;color:#8aa0bd;margin-top:12px;">Solo rol <b>Admin / Finanzas</b> puede modificar tasas. Cambios historizados para auditoría.</p>
+    </div>
+  </div>
+  <div class="m-caption">Pantalla 4 — Administración de tasas anuales predeterminadas</div>
+</div>
+
+<script>
+  document.getElementById('fecha').textContent = new Date().toLocaleDateString('es-CO',{year:'numeric',month:'long',day:'numeric'});
+
+  function toggleEdit(){
+    const el=document.getElementById('docContent');
+    const now=el.isContentEditable;
+    el.contentEditable=!now;
+    document.querySelector('.btn-edit').textContent = !now ? '✅ Modo edición ON' : '✏️ Editar';
+  }
+
+  function downloadDoc(){
+    const header='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><title>Requerimiento</title></head><body>';
+    const footer='</body></html>';
+    const content=document.getElementById('docContent').innerHTML;
+    const blob=new Blob(['\ufeff',header+content+footer],{type:'application/msword'});
+    const link=document.createElement('a');
+    link.href=URL.createObjectURL(blob);
+    link.download='Requerimiento_Pipeline_Nuevos_Negocios.doc';
+    link.click();
+  }
+</script>
+</body>
+</html>
